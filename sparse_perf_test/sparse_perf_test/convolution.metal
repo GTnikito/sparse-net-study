@@ -72,29 +72,25 @@ kernel void sparse_conv_2d(texture2d<float, access::read> inTexture[[texture(0)]
                            texture2d<float, access::write> outTexture[[texture(3)]],
                            constant int& channelsActive [[buffer(0)]],
                            ushort3 gid [[thread_position_in_grid]]) {
-    if(gid.x >= outTexture.get_width() || gid.y >= outTexture.get_height()) {
+    if(gid.x >= outTexture.get_width() || gid.y >= outTexture.get_height() || weightsIndexes.get_width() < 1) {
         return;
     }
     
     float4 value = float4(0, 0, 0, 0);
+    uint32_t indexesNum = uint32_t(weightsIndexes.read(ushort(0), 0)[0]);
     
-    for(uint32_t weightInd = 0; weightInd < weightsIndexes.get_width(); weightInd += 2) {
+    for(uint32_t weightInd = 2; weightInd < 2 * indexesNum + 2; weightInd += 2) {
         float yInd = weightsIndexes.read(ushort(weightInd), 0)[0];
         float xInd = weightsIndexes.read(ushort(weightInd + 1), 0)[0];
         
-        if (yInd >= 0 && xInd >= 0) {
-            ushort2 inCoord = ushort2(gid.x + xInd, gid.y + yInd);
-            float4 inValue = inTexture.read(inCoord, gid.z);
-            
-            ushort2 kernelCoord = ushort2(xInd, yInd);
-            float4 kernelValue = convKernel.read(kernelCoord, gid.z);
-            
-            for(ushort inComponent = 0; inComponent < channelsActive; inComponent++) {
-                value[inComponent] += inValue[inComponent] * kernelValue[inComponent];
-            }
-        }
-        else {
-            break;
+        ushort2 inCoord = ushort2(gid.x + xInd, gid.y + yInd);
+        float4 inValue = inTexture.read(inCoord, gid.z);
+        
+        ushort2 kernelCoord = ushort2(xInd, yInd);
+        float4 kernelValue = convKernel.read(kernelCoord, gid.z);
+        
+        for(ushort inComponent = 0; inComponent < channelsActive; inComponent++) {
+            value[inComponent] += inValue[inComponent] * kernelValue[inComponent];
         }
     }
 

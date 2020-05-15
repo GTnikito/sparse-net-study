@@ -263,12 +263,15 @@ class ViewController: UIViewController {
     }
     
     func generateActiveWeights(height: Int, width: Int, sparse: Float) -> [Float] {
-        var indexes = [Float](repeating: 0, count: 2 * width * height)
+        var indexes = [Float](repeating: 0, count: 2 * width * height + 2)
         
         var toNull = Int(Float(height * width) * sparse)
         var toStay = height * width - toNull
         
-        var pointer = Int(0)
+        indexes[0] = Float(toStay)
+        indexes[1] = Float(toNull)
+        
+        var pointer = Int(1)
         for i in 0..<width * height {
             if (toStay + toNull == 0) {
                 break
@@ -301,15 +304,15 @@ class ViewController: UIViewController {
         let descriptor = MTLTextureDescriptor()
         descriptor.arrayLength = 1
         descriptor.height = 1
-        descriptor.width = 2 * height * width // because x & y
+        descriptor.width = 2 * height * width + 2 // because x & y
         descriptor.pixelFormat = MTLPixelFormat.r32Float; // maybe rg32Float Only here!
         descriptor.textureType = MTLTextureType.type1D
         descriptor.usage = [.shaderRead, .shaderWrite]
         
         let texture = device.makeTexture(descriptor: descriptor)!
         
-        let region = MTLRegionMake1D(0, 2 * width * height)
-        let bytesPerRow = 2 * MemoryLayout<Float>.size * width * height; // maybe 2!
+        let region = MTLRegionMake1D(0, 2 * width * height + 2)
+        let bytesPerRow = MemoryLayout<Float>.size * (2 * width * height + 2); // maybe 2!
         let bytesPerImage = bytesPerRow
         
         for slice in 0..<descriptor.arrayLength {
