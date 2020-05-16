@@ -3,22 +3,4 @@
    uuid = "04B6D803-4345-498A-8DF2-F1676115FCC0"
    type = "1"
    version = "2.0">
-   <Breakpoints>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C34970D6-59FE-4B2D-A827-8B7DB6C2D84A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "sparse_perf_test/Convolution.metal"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "sparse_conv_2d(texture2d&lt;float, access::read&gt; inTexture[[texture(0)]], texture2d&lt;float, access::read&gt; convKernel[[texture(1)]], texture1d&lt;float, access::read&gt; weightsIndexes[[texture(2)]], texture2d&lt;float, access::write&gt; outTexture[[texture(3)]], constant int&amp; channelsActive [[buffer(0)]], ushort3 gid [[thread_position_in_grid]])"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-   </Breakpoints>
 </Bucket>

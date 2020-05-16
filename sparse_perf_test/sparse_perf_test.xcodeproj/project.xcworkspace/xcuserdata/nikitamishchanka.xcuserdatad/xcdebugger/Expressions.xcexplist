@@ -3,21 +3,18 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ViewController.createIncreasingTexture(channels:height:width:):ViewController.swift">
+         contextName = "ViewController.convertTextureToBuffer(texture:):ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "descriptor.arrayLength">
+               value = "texture.depth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.convertTextureToBuffer(texture:):ViewController.swift">
+         contextName = "ViewController.checkBuffers(buffer1:buffer2:):ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "texture.arrayLength">
-            </PersistentString>
-            <PersistentString
-               value = "texture.depth">
+               value = "buffer1.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -26,6 +23,14 @@
          <PersistentStrings>
             <PersistentString
                value = "pipeline.maxTotalThreadsPerThreadgroup">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.createIncreasingTexture(channels:height:width:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "descriptor.arrayLength">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
